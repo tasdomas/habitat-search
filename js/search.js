@@ -8,6 +8,15 @@ function clear_results(event) {
     return false;
 }
 
+function buv_cmp(a, b) {
+    if (b.tip == a.tip)
+    {
+	return b.bud - a.bud;
+    } else {
+	return b.tip - a.tip;
+    }
+}
+
 function search_execute(event) {
     event.preventDefault();
     var values = $('#species').val();
@@ -40,7 +49,7 @@ function search_execute(event) {
 			  buveines_c[value].tip += 1;
 		      });
 	   });
-    buveines_c.sort(function(a, b) {return b.count - a.count;});
+    buveines_c.sort(buv_cmp);
     $('#species-container').empty();
     $.each(buveines_c,
 	   function(key, value)
