@@ -1,0 +1,71 @@
+h1,h2,h3,h4,h5,h6{
+    font-family: "sans-serif", arial, verdana, sans-serif;
+}
+
+thead th,
+tbody th{
+    font-family: "sans-serif", arial, verdana, sans-serif;
+}
+
+button,
+a.btn,
+input[type="submit"],
+input[type="reset"],
+input[type="button"]{
+    font-family: "sans-serif", arial, verdana, sans-serif;
+}
+
+.menu{
+    font-family: "sans-serif", arial, verdana, sans-serif;
+}
+
+blockquote{
+    font-family: "sans-serif", arial, verdana, sans-serif;
+}
+
+/*---------------------------------
+  LAYOUT
+  -----------------------------------*/
+body{
+    margin:0;
+    padding:0;
+    color:#333;
+    background: #ccc;
+    font:normal 0.9em/150% 'Arimo', "Trebuchet MS", arial, verdana, sans-serif;
+    text-shadow: 0px 0px 1px transparent; /* google font pixelation fix */
+}
+
+#container{
+    width:70%;/*960*/
+    background:#fff;
+    margin:30px auto 30px auto;
+    padding:20px;
+    border:1px solid #ccc;
+}
+
+#footer{
+    text-align:center;
+    padding:20px;
+    margin:0;
+    background:#efefef;
+    border-top:1px solid #ccc;
+    color:#999;
+    font-size:0.8em;
+    text-shadow:0px 1px 1px #fff;
+    position: relative;
+    top:0;
+    left:0;
+}
+
+.chzn-choices {
+    display: block !important;
+}
+
+#search-form div {
+    margin: 10px 0;
+}
+
+.species-entry {
+    margin: 5px;
+    border: 1px solid gray;
+}
