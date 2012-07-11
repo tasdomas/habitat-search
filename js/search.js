@@ -4,6 +4,7 @@ function clear_results(event) {
     event.preventDefault();
     $("option:selected", $('#species')).removeAttr("selected");
     $('#species').trigger("liszt:updated");
+    $('#species-container').empty();
     return false;
 }
 
@@ -40,6 +41,7 @@ function search_execute(event) {
 		      });
 	   });
     buveines_c.sort(function(a, b) {return b.count - a.count;});
+    $('#species-container').empty();
     $.each(buveines_c,
 	   function(key, value)
 	   {
