@@ -5,10 +5,11 @@
     <meta name="description" content="" />
     <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.8.19.custom.min.js"></script>
-    <script type="text/javascript" src="data/rusys.js"></script>
     <script type="text/javascript" src="js/search.js"></script>
     <script type="text/javascript" src="js/handlebars.js"></script>
     <script type="text/javascript" src="js/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="data/rusys.js"></script>
+    <script type="text/javascript" src="data/kriterijai.js"></script>
     <link rel="stylesheet" type="text/css" href="css/chosen.css" media="all" /> <!-- KICKSTART -->
     <link rel="stylesheet" type="text/css" href="css/style.css" media="all" /> <!-- CUSTOM STYLES -->
     <link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.8.19.custom.css" media="all" />
@@ -19,6 +20,7 @@
     <script id="species-template" type="text/x-handlebars-template">
       <div class="species-entry">
 	<div> Buveinė: <strong>{{buveine}}</strong></div>
+	<div> Kodas: <strong>{{kodas}}</strong></div>
 	<table>
 	  <tr>
 	    <td>
@@ -31,6 +33,79 @@
 	      Tipiškos: {{tip}}
 	    </td>
 	  </tr>
+	</table>
+	<h3 class="criteria-header">Kriterijai</h3>
+	<table class="criteria">
+	  {{#if kriterijai.BudRusys}}
+	  <tr>
+	    <td class="tbl-title">
+	      Būdingos rūšys
+	    </td>
+	    <td>
+	      {{kriterijai.BudRusys}}
+	    </td>
+	  </tr>
+	  {{/if}}
+	  {{#if kriterijai.TipRusys}}
+	  <tr>
+	    <td class="tbl-title">
+	      Tipiškos rūšys
+	    </td>
+	    <td>
+	      {{kriterijai.TipRusys}}
+	    </td>
+	  </tr>
+	  {{/if}}
+	  {{#if kriterijai.BudNeMedzRusys}}
+	  <tr>
+	    <td class="tbl-title">
+	      Būdingos rūšys (išsk. medžius ir krūmus)
+	    </td>
+	    <td>
+	      {{kriterijai.BudNeMedzRusys}}
+	    </td>
+	  </tr>
+	  {{/if}}
+	  {{#if kriterijai.TipNeMedzRusys}}
+	  <tr>
+	    <td class="tbl-title">
+	      Tipiškos rūšys (išsk. medžius ir krūmus)
+	    </td>
+	    <td>
+	      {{kriterijai.TipNeMedzRusys}}
+	    </td>
+	  </tr>
+	  {{/if}}
+	  {{#if kriterijai.BudMedzRusys}}
+	  <tr>
+	    <td class="tbl-title">
+	      Būdingos rūšys (tik medžiai ir krūmai)
+	    </td>
+	    <td>
+	      {{kriterijai.BudMedzRusys}}
+	    </td>
+	  </tr>
+	  {{/if}}
+	  {{#if kriterijai.BudZolRusys}}
+	  <tr>
+	    <td class="tbl-title">
+	      Būdingos rūšys (tik žolės ir krūmokšniai)
+	    </td>
+	    <td>
+	      {{kriterijai.BudZolRusys}}
+	    </td>
+	  </tr>
+	  {{/if}}
+	  {{#if kriterijai.TipZolRusys}}
+	  <tr>
+	    <td class="tbl-title">
+	      Tipiškos rūšys (tik žolės ir krūmokšniai)
+	    </td>
+	    <td>
+	      {{kriterijai.TipZolRusys}}
+	    </td>
+	  </tr>
+	  {{/if}}
 	</table>
       </div>
     </script>

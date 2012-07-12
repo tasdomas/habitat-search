@@ -58,10 +58,12 @@ function search_execute(event) {
 	       {
 	       	   $('#species-container').append(
 		       species_tpl({
-			   'buveine':buveines[value.id].buveine,
+			   'buveine': kriterijai[buveines[value.id].buveine].Pavadinimas,
+			   'kodas': buveines[value.id].buveine,
 			   'count': value.count,
 			   'bud': value.bud,
-			   'tip': value.tip
+			   'tip': value.tip,
+			   'kriterijai': kriterijai[buveines[value.id].buveine]
 		       }));
 	       }
 	   });
@@ -80,5 +82,9 @@ $(function() {
     $(".chzn-select").chosen({no_results_text: "tokių rūšių nerasta...", disable_search_threshold: 3});
     $('#search-clear').click(clear_results);
     $('#search-exec').click(search_execute);
+    $('h3').live("click",
+	       function() {
+		   $(this).siblings('table.criteria').toggle();
+	       });
     species_tpl = Handlebars.compile($("#species-template").html());
 });

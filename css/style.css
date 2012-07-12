@@ -69,3 +69,16 @@ body{
     margin: 5px;
     border: 1px solid gray;
 }
+
+table.criteria {
+    display: none;
+}
+
+table td {
+    padding: 0.1em 1em;
+}
+
+h3.criteria-header {
+    cursor: pointer;
+    text-decoration: underline;
+}
