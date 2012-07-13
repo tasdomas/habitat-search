@@ -9,6 +9,20 @@ function clear_results(event) {
 }
 
 function buv_cmp(a, b) {
+    if ((b.c_tip != 0) || (a.c_tip != 0))
+    {
+	var a_v = 0.0;
+	var b_v = 0.0;
+	if (a.c_tip != 0)
+	{
+	    a_v = a.tip /  a.c_tip;
+	}
+	if (b.c_tip != 0)
+	{
+	    b_v = b.tip /  b.c_tip;
+	}
+	return b_v - a_v;
+    }
     if (b.tip == a.tip)
     {
 	return b.bud - a.bud;
@@ -31,7 +45,8 @@ function search_execute(event) {
 				  'id': value,
 				  'count': 0,
 				  'bud': 0,
-				  'tip': 0
+				  'tip': 0,
+				  'c_tip': kriterijai[buveines[value].buveine].TipRusys
 			      };
 			  }
 			  buveines_c[value].count += 1;
@@ -44,7 +59,8 @@ function search_execute(event) {
 				  'id': value,
 				  'count': 0,
 				  'bud': 0,
-				  'tip': 0
+				  'tip': 0,
+				  'c_tip': kriterijai[buveines[value].buveine].TipRusys
 			      };
 			  }
 			  buveines_c[value].count += 1;
@@ -79,6 +95,10 @@ function search_execute(event) {
 			      }
 			  });
 
+		   prc = "";
+		   if (value.c_tip != 0) {
+		       prc = "("+Math.round(100*value.tip / value.c_tip)+"%)";
+		   }
 	       	   $('#species-container').append(
 		       species_tpl({
 			   'buveine': kriterijai[buveines[value.id].buveine].Pavadinimas,
@@ -88,7 +108,8 @@ function search_execute(event) {
 			   'tip': value.tip,
 			   'kriterijai': kriterijai[buveines[value.id].buveine],
 			   'tip_rusys': tip_r,
-			   'bud_rusys': bud_r
+			   'bud_rusys': bud_r,
+			   'proc': prc
 		       }));
 	       }
 	   });
