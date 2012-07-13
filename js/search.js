@@ -99,6 +99,8 @@ function search_execute(event) {
 		   if (value.c_tip != 0) {
 		       prc = "("+Math.round(100*value.tip / value.c_tip)+"%)";
 		   }
+		   tip_r.sort();
+		   bud_r.sort();
 	       	   $('#species-container').append(
 		       species_tpl({
 			   'buveine': kriterijai[buveines[value.id].buveine].Pavadinimas,
