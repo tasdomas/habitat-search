@@ -127,7 +127,7 @@ $(function() {
 		   options.append($("<option />").val(this.id).text(this.rusis));
 	       };
 	   });
-    $(".chzn-select").chosen({no_results_text: "tokių rūšių nerasta...", disable_search_threshold: 3});
+    $(".chzn-select").chosen({no_results_text: "tokių rūšių nerasta...", 'disable_search_threshold': 3, 'search_contains' : false});
     $('#search-clear').click(clear_results);
     $('#search-exec').click(search_execute);
     $('h4.criteria-header').live("click",
