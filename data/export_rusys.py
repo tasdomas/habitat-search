@@ -12,7 +12,8 @@ def empty_species():
 def empty_habitat():
     return {'id': None,
             'anketa': None,
-            'rusys': set()}
+            'tip_rusys': set(),
+            'bud_rusys': set()}
 
 rusys = defaultdict(empty_species)
 buveines = defaultdict(empty_habitat)
@@ -56,12 +57,12 @@ for row in spc_rd:
     else:
         rusis_id = rusys_id_map[rusis]
 
-    buveines[buveine_id]['rusys'].add(str(rusis_id))
-
     if int(tipiskumas) != 0:
         rusys[rusis_id]['tip_buveines'].append(str(buveine_id))
+        buveines[buveine_id]['tip_rusys'].add(str(rusis_id))
     else:
         rusys[rusis_id]['bud_buveines'].append(str(buveine_id))
+        buveines[buveine_id]['bud_rusys'].add(str(rusis_id))
 
 out = open("../js/rusys.js", "wt")
 out.write("var rusys = [];\n");
@@ -75,11 +76,12 @@ for id, rusis in rusys.items():
                (len(rusis['tip_buveines']) > 0) and "" + ", ".join(rusis['tip_buveines']) + "" or ' '))
 out.write("var buveines = [];\n");
 for id, buveine in buveines.items():
-    out.write("buveines[%d] = {'buveine': '%s', 'id' : %d, 'rusys': [%s], 'anketa': '%s'};\n" %
+    out.write("buveines[%d] = {'buveine': '%s', 'id' : %d, 'tip_rusys': [%s], 'bud_rusys': [%s], 'anketa': '%s'};\n" %
               (id,
                buveine['id'],
                id,
-               (len(buveine['rusys']) > 0) and "" + ", ".join(buveine['rusys']) + "" or ' ',
+               (len(buveine['tip_rusys']) > 0) and "" + ", ".join(buveine['tip_rusys']) + "" or ' ',
+               (len(buveine['bud_rusys']) > 0) and "" + ", ".join(buveine['bud_rusys']) + "" or ' ',
                buveine['anketa']))
 
 out.close()

@@ -34,7 +34,7 @@
 	    </td>
 	  </tr>
 	</table>
-	<h3 class="criteria-header">Kriterijai</h3>
+	<h4 class="criteria-header">Kriterijai</h4>
 	<table class="criteria">
 	  {{#if kriterijai.BudRusys}}
 	  <tr>
@@ -107,6 +107,17 @@
 	  </tr>
 	  {{/if}}
 	</table>
+	<h4 class="missingspecies-header">Trūkstamos rūšys</h4>
+	<div class="missingspecies">
+	  <ul>
+	  {{#each tip_rusys}}
+	  <li><strong>{{this}}</strong></li>
+	  {{/each}}}
+	  {{#each bud_rusys}}
+	  <li>{{this}}</li>
+	  {{/each}}}
+	  </ul>
+	</div>
       </div>
     </script>
 

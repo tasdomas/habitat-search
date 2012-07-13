@@ -31,7 +31,8 @@ function search_execute(event) {
 				  'id': value,
 				  'count': 0,
 				  'bud': 0,
-				  'tip': 0};
+				  'tip': 0
+			      };
 			  }
 			  buveines_c[value].count += 1;
 			  buveines_c[value].bud += 1;
@@ -43,7 +44,8 @@ function search_execute(event) {
 				  'id': value,
 				  'count': 0,
 				  'bud': 0,
-				  'tip': 0};
+				  'tip': 0
+			      };
 			  }
 			  buveines_c[value].count += 1;
 			  buveines_c[value].tip += 1;
@@ -56,6 +58,27 @@ function search_execute(event) {
 	   {
 	       if (typeof value != 'undefined')
 	       {
+		   var temp = buveines[value.id].tip_rusys;
+		   var tip_r = [];
+		   $.each(temp,
+			  function(key, value)
+			  {
+			      if ($.inArray(String(value), values) == -1)
+			      {
+				  tip_r.push(rusys[value].rusis);
+			      }
+			  });
+		   temp = buveines[value.id].bud_rusys;
+		   var bud_r = [];
+		   $.each(temp,
+			  function(key, value)
+			  {
+			      if ($.inArray(String(value), values) == -1)
+			      {
+				  bud_r.push(rusys[value].rusis);
+			      }
+			  });
+
 	       	   $('#species-container').append(
 		       species_tpl({
 			   'buveine': kriterijai[buveines[value.id].buveine].Pavadinimas,
@@ -63,7 +86,9 @@ function search_execute(event) {
 			   'count': value.count,
 			   'bud': value.bud,
 			   'tip': value.tip,
-			   'kriterijai': kriterijai[buveines[value.id].buveine]
+			   'kriterijai': kriterijai[buveines[value.id].buveine],
+			   'tip_rusys': tip_r,
+			   'bud_rusys': bud_r
 		       }));
 	       }
 	   });
@@ -82,9 +107,14 @@ $(function() {
     $(".chzn-select").chosen({no_results_text: "tokių rūšių nerasta...", disable_search_threshold: 3});
     $('#search-clear').click(clear_results);
     $('#search-exec').click(search_execute);
-    $('h3').live("click",
+    $('h4.criteria-header').live("click",
 	       function() {
 		   $(this).siblings('table.criteria').toggle();
 	       });
+    $('h4.missingspecies-header').live("click",
+	       function() {
+		   $(this).siblings('div.missingspecies').toggle();
+	       });
+
     species_tpl = Handlebars.compile($("#species-template").html());
 });

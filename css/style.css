@@ -74,11 +74,16 @@ table.criteria {
     display: none;
 }
 
+div.missingspecies {
+    display: none;
+}
+
 table td {
     padding: 0.1em 1em;
 }
 
-h3.criteria-header {
+h4.criteria-header,
+h4.missingspecies-header {
     cursor: pointer;
     text-decoration: underline;
 }
