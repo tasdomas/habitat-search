@@ -27,10 +27,10 @@
 	      Atitinka rūšių: {{count}}
 	    </td>
 	    <td>
-	      Iš jų būdingos: {{bud}}
+	      Iš jų būdingos: {{bud}} {{bud_proc}}
 	    </td>
 	    <td>
-	      Tipiškos: {{tip}} {{proc}}
+	      Tipiškos: {{tip}} {{tip_proc}}
 	    </td>
 	  </tr>
 	</table>
@@ -62,7 +62,7 @@
 	      Būdingos rūšys (išsk. medžius ir krūmus)
 	    </td>
 	    <td>
-	      {{kriterijai.BudNeMedzRusys}}
+	      {{kriterijai.BudNeMedzRusys}} ({{bud_nemedz}})
 	    </td>
 	  </tr>
 	  {{/if}}
@@ -82,7 +82,7 @@
 	      Būdingos rūšys (tik medžiai ir krūmai)
 	    </td>
 	    <td>
-	      {{kriterijai.BudMedzRusys}}
+	      {{kriterijai.BudMedzRusys}} ({{bud_medz}})
 	    </td>
 	  </tr>
 	  {{/if}}
@@ -92,7 +92,7 @@
 	      Būdingos rūšys (tik žolės ir krūmokšniai)
 	    </td>
 	    <td>
-	      {{kriterijai.BudZolRusys}}
+	      {{kriterijai.BudZolRusys}} ({{bud_zol}})
 	    </td>
 	  </tr>
 	  {{/if}}

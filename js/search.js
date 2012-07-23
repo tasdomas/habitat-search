@@ -9,9 +9,13 @@ function clear_results(event) {
 }
 
 function buv_cmp(a, b) {
-    if ((b.tip_perc != 0) || (a.tip_per != 0))
+    if ((b.tip_perc != 0) || (a.tip_perc != 0))
     {
 	return b.tip_perc - a.tip_perc;
+    }
+    if ((b.bud_perc != 0) || (a.bud_perc != 0))
+    {
+	return b.bud_perc - a.bud_perc;
     }
     if (b.tip == a.tip)
     {
@@ -35,17 +39,28 @@ function search_execute(event) {
 				  'id': bvalue,
 				  'count': 0,
 				  'bud': 0,
+				  'bud_nemedz': 0,
+				  'bud_medz': 0,
+				  'bud_zol': 0,
 				  'tip': 0,
 				  'tip_nemedz': 0,
 				  'tip_zol': 0,
 				  'c_tip': kriterijai[buveines[bvalue].buveine].TipRusys,
 				  'c_tipnemedz': kriterijai[buveines[bvalue].buveine].TipNeMedzRusys,
 				  'c_tipzol': kriterijai[buveines[bvalue].buveine].TipZolRusys,
-				  'tip_perc': 0
+				  'c_bud': kriterijai[buveines[bvalue].buveine].BudRusys,
+				  'c_budnemedz': kriterijai[buveines[bvalue].buveine].BudNeMedzRusys,
+				  'c_budzol': kriterijai[buveines[bvalue].buveine].BudZolRusys,
+				  'c_budmedz': kriterijai[buveines[bvalue].buveine].BudMedzRusys,
+				  'tip_perc': 0,
+				  'bud_perc': 0
 			      };
 			  }
 			  buveines_c[bvalue].count += 1;
 			  buveines_c[bvalue].bud += 1;
+			  buveines_c[bvalue].bud_nemedz += rusys[value].nemedz;
+			  buveines_c[bvalue].bud_zol += rusys[value].zol;
+			  buveines_c[bvalue].bud_medz += rusys[value].medz;
 		      });
 	       $.each(rusys[value].tip_buveines,
 		      function(key, bvalue) {
@@ -54,13 +69,21 @@ function search_execute(event) {
 				  'id': bvalue,
 				  'count': 0,
 				  'bud': 0,
+				  'bud_nemedz': 0,
+				  'bud_medz': 0,
+				  'bud_zol': 0,
 				  'tip': 0,
 				  'tip_nemedz': 0,
 				  'tip_zol': 0,
 				  'c_tip': kriterijai[buveines[bvalue].buveine].TipRusys,
 				  'c_tipnemedz': kriterijai[buveines[bvalue].buveine].TipNeMedzRusys,
 				  'c_tipzol': kriterijai[buveines[bvalue].buveine].TipZolRusys,
-				  'tip_perc': 0
+				  'c_bud': kriterijai[buveines[bvalue].buveine].BudRusys,
+				  'c_budnemedz': kriterijai[buveines[bvalue].buveine].BudNeMedzRusys,
+				  'c_budzol': kriterijai[buveines[bvalue].buveine].BudZolRusys,
+				  'c_budmedz': kriterijai[buveines[bvalue].buveine].BudMedzRusys,
+				  'tip_perc': 0,
+				  'bud_perc': 0
 			      };
 			  }
 			  buveines_c[bvalue].count += 1;
@@ -82,6 +105,20 @@ function search_execute(event) {
 		   if (buveines_c[key].c_tip != 0) {
 		       buveines_c[key].tip_perc += buveines_c[key].tip / buveines_c[key].c_tip;
 		   }
+		   if (buveines_c[key].c_bud != 0) {
+		       buveines_c[key].bud_perc += buveines_c[key].bud / buveines_c[key].c_bud;
+		   }
+
+		   if (buveines_c[key].c_budnemedz != 0) {
+		       buveines_c[key].bud_perc += buveines_c[key].bud_nemedz / buveines_c[key].c_budnemedz;
+		   }
+		   if (buveines_c[key].c_budmedz != 0) {
+		       buveines_c[key].bud_perc += buveines_c[key].bud_medz / buveines_c[key].c_budmedz;
+		   }
+		   if (buveines_c[key].c_budzol != 0) {
+		       buveines_c[key].bud_perc += buveines_c[key].bud_zol / buveines_c[key].c_budzol;
+		   }
+
 	       }
 	   });
     buveines_c.sort(buv_cmp);
@@ -112,10 +149,15 @@ function search_execute(event) {
 			      }
 			  });
 
-		   prc = "";
+		   tip_prc = "";
 		   if (value.tip_perc != 0) {
-		       prc = "("+Math.round(100*value.tip_perc)+"%)";
+		       tip_prc = "("+Math.round(100*value.tip_perc)+"%)";
 		   }
+		   bud_prc = "";
+		   if (value.bud_perc != 0) {
+		       bud_prc = "("+Math.round(100*value.bud_perc)+"%)";
+		   }
+
 		   tip_r.sort();
 		   bud_r.sort();
 	       	   $('#species-container').append(
@@ -130,7 +172,11 @@ function search_execute(event) {
 			   'bud_rusys': bud_r,
 			   'tip_zol': value.tip_zol,
 			   'tip_nemedz': value.tip_nemedz,
-			   'proc': prc
+			   'bud_medz' : value.bud_medz,
+			   'bud_zol' : value.bud_zol,
+			   'bud_nemedz' : value.bud_nemedz,
+			   'tip_proc': tip_prc,
+			   'bud_proc': bud_prc
 		       }));
 	       }
 	   });

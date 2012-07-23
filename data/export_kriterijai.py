@@ -12,6 +12,6 @@ for row in spc_rd:
     row[2:] = map(lambda x: int(x) if x != '-' else 0, row[2:])
     out.write("kriterijai['%s'] = {'Pavadinimas': '%s', 'BudRusys': %d, 'TipRusys': %d,"
               "'BudNeMedzRusys': %d, 'TipNeMedzRusys': %d,"
-              "'TipMedzRusys': %d, 'BudZolRusys': %d, 'TipZolRusys': %d}; \n" % tuple(row))
+              "'BudMedzRusys': %d, 'BudZolRusys': %d, 'TipZolRusys': %d}; \n" % tuple(row))
 
 out.close()

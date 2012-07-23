@@ -9,6 +9,7 @@ def empty_species():
     return {'id': None,
             'rusis': None,
             'nemedz': 0,
+            'medz': 0,
             'zol': 0,
             'akronimas': None,
             'bud_buveines': [],
@@ -61,6 +62,9 @@ for row in spc_rd:
             rusys[rusis_id]['zol'] = 1
         if not aug_tipas.startswith("Medžiai"):
             rusys[rusis_id]['nemedz'] = 1
+        if aug_tipas.startswith("Medžiai"):
+            rusys[rusis_id]['medz'] = 1
+
         rusys_id_map[rusis] = rusis_id
         rusis_id_counter += 1
     else:
@@ -76,7 +80,7 @@ for row in spc_rd:
 out = open("../js/rusys.js", "wt")
 out.write("var rusys = [];\n");
 for id, rusis in rusys.items():
-    out.write("rusys[%d] = {'rusis' : '%s', 'id' : %d, 'akronimas': '%s', 'bud_buveines': [%s], 'tip_buveines': [%s], 'nemedz': %d, 'zol': %d};\n" %
+    out.write("rusys[%d] = {'rusis' : '%s', 'id' : %d, 'akronimas': '%s', 'bud_buveines': [%s], 'tip_buveines': [%s], 'nemedz': %d, 'zol': %d, medz: %d};\n" %
               (id,
                rusis['rusis'],
                id,
@@ -84,7 +88,8 @@ for id, rusis in rusys.items():
                (len(rusis['bud_buveines']) > 0) and "" + ", ".join(rusis['bud_buveines']) + "" or ' ',
                (len(rusis['tip_buveines']) > 0) and "" + ", ".join(rusis['tip_buveines']) + "" or ' ',
                rusis['nemedz'],
-               rusis['zol']))
+               rusis['zol'],
+               rusis['medz']))
 out.write("var buveines = [];\n");
 for id, buveine in buveines.items():
     out.write("buveines[%d] = {'buveine': '%s', 'id' : %d, 'tip_rusys': [%s], 'bud_rusys': [%s], 'anketa': '%s'};\n" %
