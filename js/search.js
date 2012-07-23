@@ -9,19 +9,9 @@ function clear_results(event) {
 }
 
 function buv_cmp(a, b) {
-    if ((b.c_tip != 0) || (a.c_tip != 0))
+    if ((b.tip_perc != 0) || (a.tip_per != 0))
     {
-	var a_v = 0.0;
-	var b_v = 0.0;
-	if (a.c_tip != 0)
-	{
-	    a_v = a.tip /  a.c_tip;
-	}
-	if (b.c_tip != 0)
-	{
-	    b_v = b.tip /  b.c_tip;
-	}
-	return b_v - a_v;
+	return b.tip_perc - a.tip_perc;
     }
     if (b.tip == a.tip)
     {
@@ -39,33 +29,60 @@ function search_execute(event) {
     $.each(values,
 	   function(key, value) {
 	       $.each(rusys[value].bud_buveines,
-		      function(key, value) {
-			  if (typeof buveines_c[value] == 'undefined') {
-			      buveines_c[value] = {
-				  'id': value,
+		      function(key, bvalue) {
+			  if (typeof buveines_c[bvalue] == 'undefined') {
+			      buveines_c[bvalue] = {
+				  'id': bvalue,
 				  'count': 0,
 				  'bud': 0,
 				  'tip': 0,
-				  'c_tip': kriterijai[buveines[value].buveine].TipRusys
+				  'tip_nemedz': 0,
+				  'tip_zol': 0,
+				  'c_tip': kriterijai[buveines[bvalue].buveine].TipRusys,
+				  'c_tipnemedz': kriterijai[buveines[bvalue].buveine].TipNeMedzRusys,
+				  'c_tipzol': kriterijai[buveines[bvalue].buveine].TipZolRusys,
+				  'tip_perc': 0
 			      };
 			  }
-			  buveines_c[value].count += 1;
-			  buveines_c[value].bud += 1;
+			  buveines_c[bvalue].count += 1;
+			  buveines_c[bvalue].bud += 1;
 		      });
 	       $.each(rusys[value].tip_buveines,
-		      function(key, value) {
-			  if (typeof buveines_c[value] == 'undefined') {
-			      buveines_c[value] = {
-				  'id': value,
+		      function(key, bvalue) {
+			  if (typeof buveines_c[bvalue] == 'undefined') {
+			      buveines_c[bvalue] = {
+				  'id': bvalue,
 				  'count': 0,
 				  'bud': 0,
 				  'tip': 0,
-				  'c_tip': kriterijai[buveines[value].buveine].TipRusys
+				  'tip_nemedz': 0,
+				  'tip_zol': 0,
+				  'c_tip': kriterijai[buveines[bvalue].buveine].TipRusys,
+				  'c_tipnemedz': kriterijai[buveines[bvalue].buveine].TipNeMedzRusys,
+				  'c_tipzol': kriterijai[buveines[bvalue].buveine].TipZolRusys,
+				  'tip_perc': 0
 			      };
 			  }
-			  buveines_c[value].count += 1;
-			  buveines_c[value].tip += 1;
+			  buveines_c[bvalue].count += 1;
+			  buveines_c[bvalue].tip += 1;
+			  buveines_c[bvalue].tip_nemedz += rusys[value].nemedz;
+			  buveines_c[bvalue].tip_zol += rusys[value].zol;
 		      });
+	   });
+    $.each(buveines_c,
+	   function(key, bvalue) {
+	       if (typeof bvalue != 'undefined')
+	       {
+		   if (buveines_c[key].c_tipnemedz != 0) {
+		       buveines_c[key].tip_perc += buveines_c[key].tip_nemedz / buveines_c[key].c_tipnemedz;
+		   }
+		   if (buveines_c[key].c_tipzol != 0) {
+		       buveines_c[key].tip_perc += buveines_c[key].tip_zol / buveines_c[key].c_tipzol;
+		   }
+		   if (buveines_c[key].c_tip != 0) {
+		       buveines_c[key].tip_perc += buveines_c[key].tip / buveines_c[key].c_tip;
+		   }
+	       }
 	   });
     buveines_c.sort(buv_cmp);
     $('#species-container').empty();
@@ -96,8 +113,8 @@ function search_execute(event) {
 			  });
 
 		   prc = "";
-		   if (value.c_tip != 0) {
-		       prc = "("+Math.round(100*value.tip / value.c_tip)+"%)";
+		   if (value.tip_perc != 0) {
+		       prc = "("+Math.round(100*value.tip_perc)+"%)";
 		   }
 		   tip_r.sort();
 		   bud_r.sort();
@@ -111,6 +128,8 @@ function search_execute(event) {
 			   'kriterijai': kriterijai[buveines[value.id].buveine],
 			   'tip_rusys': tip_r,
 			   'bud_rusys': bud_r,
+			   'tip_zol': value.tip_zol,
+			   'tip_nemedz': value.tip_nemedz,
 			   'proc': prc
 		       }));
 	       }

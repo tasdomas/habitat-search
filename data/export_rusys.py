@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -- coding: utf-8 --
+
 import csv
 from collections import defaultdict
 
@@ -5,6 +8,8 @@ from collections import defaultdict
 def empty_species():
     return {'id': None,
             'rusis': None,
+            'nemedz': 0,
+            'zol': 0,
             'akronimas': None,
             'bud_buveines': [],
             'tip_buveines': []}
@@ -52,6 +57,10 @@ for row in spc_rd:
         rusys[rusis_id]['id'] = rusis_id
         rusys[rusis_id]['rusis'] = rusis
         rusys[rusis_id]['akronimas'] = akronimas
+        if aug_tipas.startswith("Žolės"):
+            rusys[rusis_id]['zol'] = 1
+        if not aug_tipas.startswith("Medžiai"):
+            rusys[rusis_id]['nemedz'] = 1
         rusys_id_map[rusis] = rusis_id
         rusis_id_counter += 1
     else:
@@ -67,13 +76,15 @@ for row in spc_rd:
 out = open("../js/rusys.js", "wt")
 out.write("var rusys = [];\n");
 for id, rusis in rusys.items():
-    out.write("rusys[%d] = {'rusis' : '%s', 'id' : %d, 'akronimas': '%s', 'bud_buveines': [%s], 'tip_buveines': [%s]};\n" %
+    out.write("rusys[%d] = {'rusis' : '%s', 'id' : %d, 'akronimas': '%s', 'bud_buveines': [%s], 'tip_buveines': [%s], 'nemedz': %d, 'zol': %d};\n" %
               (id,
                rusis['rusis'],
                id,
                rusis['akronimas'],
                (len(rusis['bud_buveines']) > 0) and "" + ", ".join(rusis['bud_buveines']) + "" or ' ',
-               (len(rusis['tip_buveines']) > 0) and "" + ", ".join(rusis['tip_buveines']) + "" or ' '))
+               (len(rusis['tip_buveines']) > 0) and "" + ", ".join(rusis['tip_buveines']) + "" or ' ',
+               rusis['nemedz'],
+               rusis['zol']))
 out.write("var buveines = [];\n");
 for id, buveine in buveines.items():
     out.write("buveines[%d] = {'buveine': '%s', 'id' : %d, 'tip_rusys': [%s], 'bud_rusys': [%s], 'anketa': '%s'};\n" %
