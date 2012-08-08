@@ -33,6 +33,10 @@ function search_clear() {
     update_selected();
 };
 
+function search_exec() {
+    $.mobile.changePage('#resultsPage');
+};
+
 
 //$("#searchPage").bind("pageshow", function(e) {
 $(function(){
@@ -41,7 +45,7 @@ $(function(){
 
     // bind event handlers
     $('#search-clear').click(search_clear);
-
+    $('#search-exec').click(search_exec);
 
     // initialize auto-complete
     load_autocomplete(rusys);
