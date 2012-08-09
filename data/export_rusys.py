@@ -77,7 +77,7 @@ for row in spc_rd:
         rusys[rusis_id]['bud_buveines'].append(str(buveine_id))
         buveines[buveine_id]['bud_rusys'].add(str(rusis_id))
 
-out = open("../js/rusys.js", "wt")
+out = open("rusys.js", "wt")
 out.write("var rusys = [];\n");
 for id, rusis in rusys.items():
     out.write("rusys[%d] = {'rusis' : '%s', 'id' : %d, 'akronimas': '%s', 'bud_buveines': [%s], 'tip_buveines': [%s], 'nemedz': %d, 'zol': %d, medz: %d};\n" %

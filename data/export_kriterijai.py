@@ -1,5 +1,5 @@
 import csv
-out = open("../js/kriterijai.js", "wt")
+out = open("kriterijai.js", "wt")
 spc_rd = csv.reader(open('kriterijai.csv', 'rb'), delimiter='\t', quotechar="\"")
 
 out.write("var kriterijai = [];\n");
