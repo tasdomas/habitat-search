@@ -220,6 +220,14 @@ function search_exec() {
     $('#results').trigger("create");
 };
 
+function search_click() {
+    var id = +this.id;
+    search_query.splice(search_query.indexOf(id), 1);
+    $(this).remove();
+    update_selected();
+    update_autocomplete();
+}
+
 // filter autocomplete list, removing values that exist in the present list
 function filter_complete(original, remove) {
     results = [];
@@ -249,6 +257,8 @@ $(function(){
     $('#search-clear').click(search_clear);
     $('#search-exec').click(search_exec);
 
+    $('#search li').live('click', search_click);
+
     // initialize auto-complete
     load_autocomplete(rusys);    $("#searchField").autocomplete({
 	target: $('#species'),
@@ -267,6 +277,7 @@ $(function(){
 		$("#search").listview("refresh");
 		update_selected();
 		update_autocomplete();
+		$('#searchField').focus();
 	    };
 	    $("#searchField").autocomplete('clear');
 	},
