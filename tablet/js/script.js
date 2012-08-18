@@ -134,7 +134,10 @@ function search_execute() {
 			  {
 			      if ($.inArray(String(value), values) == -1)
 			      {
-				  tip_r.push(rusys[value].rusis);
+				  tip_r.push({
+				      'label': rusys[value].rusis,
+				      'value': value
+				      });
 			      }
 			  });
 		   temp = buveines[value.id].bud_rusys;
@@ -144,7 +147,10 @@ function search_execute() {
 			  {
 			      if ($.inArray(String(value), values) == -1)
 			      {
-				  bud_r.push(rusys[value].rusis);
+				  bud_r.push({
+				      'label': rusys[value].rusis,
+				      'value': value
+				  });
 			      }
 			  });
 
@@ -200,6 +206,14 @@ function load_templates() {
     habitat_tpl = Handlebars.compile($("#habitat-tpl").html());
 };
 
+function add_selected(id) {
+    $("#search").append(search_tpl({
+	'id' : id,
+	'name' : rusys[id].rusis
+    }));
+    $("#search").listview("refresh");
+    search_query.push(id);
+};
 
 function update_selected() {
     $('#selected-count').text(search_query.length);
@@ -226,7 +240,16 @@ function search_click() {
     $(this).remove();
     update_selected();
     update_autocomplete();
-}
+};
+
+function search_add() {
+    id = +this.id;
+    add_selected(id);
+    update_selected();
+    search_execute();
+    $('.clps').trigger("create");
+    $('#results').trigger("create");
+};
 
 // filter autocomplete list, removing values that exist in the present list
 function filter_complete(original, remove) {
@@ -258,9 +281,11 @@ $(function(){
     $('#search-exec').click(search_exec);
 
     $('#search li').live('click', search_click);
+    $('.missing-list li').live('click', search_add);
 
     // initialize auto-complete
-    load_autocomplete(rusys);    $("#searchField").autocomplete({
+    load_autocomplete(rusys);
+    $("#searchField").autocomplete({
 	target: $('#species'),
 	source: species_autocomplete,
 	link: '',
@@ -269,12 +294,7 @@ $(function(){
 	    var id = selected.attr("href");
 	    $('#searchField').val('');
 	    if ($.inArray(id, search_query) == -1) {
-		search_query.push(+id);
-		$("#search").append(search_tpl({
-		    'id' : id,
-		    'name' : selected.text()
-		}));
-		$("#search").listview("refresh");
+		add_selected(id);
 		update_selected();
 		update_autocomplete();
 		$('#searchField').focus();
