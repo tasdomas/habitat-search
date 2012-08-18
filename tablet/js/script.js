@@ -291,7 +291,7 @@ $(function(){
 	link: '',
 	callback: function(e) {
 	    var selected = $(e.currentTarget);
-	    var id = selected.attr("href");
+	    var id = +selected.attr("href");
 	    $('#searchField').val('');
 	    if ($.inArray(id, search_query) == -1) {
 		add_selected(id);
