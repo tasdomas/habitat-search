@@ -210,6 +210,7 @@ function search_clear() {
     search_query = [];
     $("#search").empty().listview("refresh");
     update_selected();
+    update_autocomplete();
 };
 
 function search_exec() {
@@ -219,6 +220,25 @@ function search_exec() {
     $('#results').trigger("create");
 };
 
+// filter autocomplete list, removing values that exist in the present list
+function filter_complete(original, remove) {
+    results = [];
+    $.each(original,
+	   function(k, v) {
+	       if ($.inArray(v.value, remove) == -1)
+	       {
+		   results.push(v);
+	       }
+	   });
+    return results;
+};
+
+function update_autocomplete() {
+    new_autocomplete = filter_complete(species_autocomplete, search_query);
+    $("#searchField").autocomplete("update", {
+	'source': new_autocomplete});
+
+};
 
 //$("#searchPage").bind("pageshow", function(e) {
 $(function(){
@@ -230,8 +250,7 @@ $(function(){
     $('#search-exec').click(search_exec);
 
     // initialize auto-complete
-    load_autocomplete(rusys);
-    $("#searchField").autocomplete({
+    load_autocomplete(rusys);    $("#searchField").autocomplete({
 	target: $('#species'),
 	source: species_autocomplete,
 	link: '',
@@ -240,13 +259,14 @@ $(function(){
 	    var id = selected.attr("href");
 	    $('#searchField').val('');
 	    if ($.inArray(id, search_query) == -1) {
-		search_query.push(id);
+		search_query.push(+id);
 		$("#search").append(search_tpl({
 		    'id' : id,
 		    'name' : selected.text()
 		}));
 		$("#search").listview("refresh");
 		update_selected();
+		update_autocomplete();
 	    };
 	    $("#searchField").autocomplete('clear');
 	},
