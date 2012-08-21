@@ -132,7 +132,7 @@ function search_execute() {
 		   $.each(temp,
 			  function(key, value)
 			  {
-			      if ($.inArray(String(value), values) == -1)
+			      if ($.inArray(value, values) == -1)
 			      {
 				  tip_r.push({
 				      'label': rusys[value].rusis,
@@ -145,7 +145,7 @@ function search_execute() {
 		   $.each(temp,
 			  function(key, value)
 			  {
-			      if ($.inArray(String(value), values) == -1)
+			      if ($.inArray(value, values) == -1)
 			      {
 				  bud_r.push({
 				      'label': rusys[value].rusis,
@@ -207,12 +207,15 @@ function load_templates() {
 };
 
 function add_selected(id) {
-    $("#search").append(search_tpl({
-	'id' : id,
-	'name' : rusys[id].rusis
-    }));
-    $("#search").listview("refresh");
-    search_query.push(id);
+    if (search_query.indexOf(id) == -1)
+    {
+	$("#search").append(search_tpl({
+	    'id' : id,
+	    'name' : rusys[id].rusis
+	}));
+	$("#search").listview("refresh");
+	search_query.push(id);
+    };
 };
 
 function update_selected() {
