@@ -6,7 +6,18 @@ var search_query = [];
 var search_tpl;
 var habitat_tpl;
 
-// main search function
+//compare missing species list
+function missing_cmp(a, b) {
+    if (a.label > b.label) {
+	return 1;
+    } else if (a.label < b.label) {
+	return -1;
+    } else {
+	return 0;
+    }
+}
+
+
 function buv_cmp(a, b) {
     if ((b.tip_perc != 0) || (a.tip_perc != 0))
     {
@@ -24,6 +35,7 @@ function buv_cmp(a, b) {
     }
 }
 
+//main search function
 function search_execute() {
     var values = search_query;
     var buveines_c = [];
@@ -163,8 +175,8 @@ function search_execute() {
 		       bud_prc = "("+Math.round(100*value.bud_perc)+"%)";
 		   }
 
-		   tip_r.sort();
-		   bud_r.sort();
+		   tip_r.sort(missing_cmp);
+		   bud_r.sort(missing_cmp);
 	       	   $('#results').append(
 		       habitat_tpl({
 			   'buveine': kriterijai[buveines[value.id].buveine].Pavadinimas,
